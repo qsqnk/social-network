@@ -1,7 +1,7 @@
 package com.socialnetwork.service;
 
 import com.socialnetwork.entity.UserEntity;
-import com.socialnetwork.exceptions.UserAlreadyExistsException;
+import com.socialnetwork.exceptions.UserAlreadyRegisteredException;
 import com.socialnetwork.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +16,10 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
-  public UserEntity register(UserEntity user) throws UserAlreadyExistsException {
+  public UserEntity register(UserEntity user) throws UserAlreadyRegisteredException {
     var username = user.getUsername();
     if (userRepository.existsByUsername(username)) {
-      throw new UserAlreadyExistsException(username);
+      throw new UserAlreadyRegisteredException(username);
     }
     return userRepository.save(user);
   }
